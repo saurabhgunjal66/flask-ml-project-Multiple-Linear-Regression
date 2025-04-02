@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Prediction</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Multiple Linear Regression Predictor</h1>
+        <form action="/predict" method="post">
+            <label for="tv">TV:</label>
+            <input type="text" name="tv" required>
+        
+            <label for="radio">Radio:</label>
+            <input type="text" name="radio" required>
+        
+            <label for="newspaper">Newspaper:</label>
+            <input type="text" name="newspaper" required>
+        
+            <button type="submit">Predict</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+            
+            fetch("/predict", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerHTML = <h2>Prediction: ${data.prediction}</h2>;
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>

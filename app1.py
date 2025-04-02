@@ -17,16 +17,18 @@ with open(file_path, "rb") as f:
 def index():
     return render_template("index.html")
 
+
+
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        # Get variables from the form
-        variable1 = float(request.form["variable1"])
-        variable2 = float(request.form["variable2"])
-        variable3 = float(request.form["variable3"])
+        # Get values from the form
+        tv = float(request.form["tv"])
+        radio = float(request.form["radio"])
+        newspaper = float(request.form["newspaper"])
 
         # Predict using the loaded model
-        prediction = model.predict([[variable1, variable2, variable3]])
+        prediction = model.predict([[tv, radio, newspaper]])
 
         return jsonify({"prediction": prediction[0]})
     except Exception as e:
